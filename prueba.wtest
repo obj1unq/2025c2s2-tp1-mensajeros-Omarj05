@@ -1,0 +1,46 @@
+import example.*
+
+describe "Paquete" {
+    test "mensajero puede llegar al puente de Brooklyn" {
+        assert.equals(true, paquete.mensajeroPuedeLlegar())
+    }
+    
+    test "mensajero no puede entregar el paquete" {
+        paquete.pagado(false)
+        assert.equals(false, paquete.sePuedeEntregar())
+    }
+}
+
+describe "Puente de Brooklyn" {
+    test "las restricciones a Jean funcionan" {
+        assert.equals(true, puenteDeBrooklyn.permitido(jeanGray))
+    }
+
+    test "las restricciones a Sara funcionan" {
+        assert.equals(true, puenteDeBrooklyn.permitido(saraConnor))
+
+        saraConnor.vehiculo(camion)
+        camion.acoplados(true)
+        assert.equals(false, puenteDeBrooklyn.permitido(saraConnor))
+    }
+
+    test "las restricciones a Neo funcionan" {
+        assert.equals(true, puenteDeBrooklyn.permitido(neo))
+    }
+}
+
+describe "La Matrix" {
+    test "las restricciones a Jean funcionan" {
+        assert.equals(true, laMatrix.permitido(jeanGray))
+    }
+
+    test "las restricciones a Sara funcionan" {
+        assert.equals(false, laMatrix.permitido(saraConnor))
+    }
+
+    test "las restricciones a Neo funcionan" {
+        assert.equals(true, laMatrix.permitido(neo))
+
+        
+    }
+}
