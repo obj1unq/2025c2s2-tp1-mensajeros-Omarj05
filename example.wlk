@@ -14,7 +14,7 @@ object paquete {
 
 object puenteDeBrooklyn {
 	method permitido(mensajero) {
-		return mensajero.peso() < 1000
+		return mensajero.peso() <= 1000
 	}
 }
 
@@ -35,15 +35,14 @@ object jeanGray {
 
 object neo {
 	const property peso = 0
+	var property tieneCredito = true
 
 	method puedeLlegarA(destino) {
 		return destino.permitido(self)
 	}
 
 	method llamado() {
-		return true
-
-
+		return self.tieneCredito()
 	}
 }
 

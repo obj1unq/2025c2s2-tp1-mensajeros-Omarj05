@@ -1,13 +1,24 @@
 import example.*
 
 describe "Paquete" {
-    test "mensajero puede llegar al puente de Brooklyn" {
+    test "Jean puede entregar el al puente de Brooklyn" {
         assert.equals(true, paquete.mensajeroPuedeLlegar())
+
+        paquete.pagado(false)
+        assert.equals(false, paquete.mensajeroPuedeLlegar())
+
+        paquete.pagado(true)
     }
     
-    test "mensajero no puede entregar el paquete" {
+    test "las restriccion de pago funciona" {
+        assert.equals(true, paquete.sePuedeEntregar())
         paquete.pagado(false)
         assert.equals(false, paquete.sePuedeEntregar())
+    }
+
+    test "mensajero puede llegar a la Matrix" {
+        paquete.destino(laMatrix)
+        assert.equals(true, paquete.mensajeroPuedeLlegar())
     }
 }
 
@@ -41,6 +52,8 @@ describe "La Matrix" {
     test "las restricciones a Neo funcionan" {
         assert.equals(true, laMatrix.permitido(neo))
 
-        
+        neo.tieneCredito(false)
+        assert.equals(false, laMatrix.permitido(neo))
     }
 }
+
