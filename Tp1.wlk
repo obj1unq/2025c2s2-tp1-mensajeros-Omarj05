@@ -8,13 +8,14 @@ object paquete {
 	}
 
 	method mensajeroPuedeLlegar() {
-		return mensajero.puedeLlegarA(destino)
+		return mensajero.puedeLlegar(destino)
 	}
 }
 
+//destinos
 object puenteDeBrooklyn {
 	method permitido(mensajero) {
-		return mensajero.peso() <= 1000
+		return mensajero.peso() <= 1000 //si el mensajero pesa hasta 1000 kilos, puede pasar por el puente
 	}
 }
 
@@ -24,11 +25,12 @@ object laMatrix {
 	}
 }
 
+//mensajeros
 object jeanGray {
 	const property llamado = true
 	const property peso = 65
 
-	method puedeLlegarA(destino) {
+	method puedeLlegar(destino) {
 		return destino.permitido(self)
 	}
 }
@@ -37,7 +39,7 @@ object neo {
 	const property peso = 0
 	var property tieneCredito = true
 
-	method puedeLlegarA(destino) {
+	method puedeLlegar(destino) {
 		return destino.permitido(self)
 	}
 
@@ -54,20 +56,20 @@ object saraConnor {
 	method peso() {
 		return pesoSara + vehiculo.peso()
 	}
-	method puedeLlegarA(destino) {
+	method puedeLlegar(destino) {
 		return destino.permitido(self)
 	}
 }
 
+//vehículos
 object moto {
 	const property peso = 100
 }
 
 object camion {
-	const property pesoBase = 500
 	var property acoplados = false
 
 	method peso() {
-		return if (acoplados) {pesoBase +500} else { pesoBase }
+		return if (acoplados) {1000} else { 500 }
 	}
 }

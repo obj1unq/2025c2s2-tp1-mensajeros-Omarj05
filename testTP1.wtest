@@ -1,0 +1,93 @@
+import Tp1.*
+
+describe "Paquete" {
+    test "el paquete se puede entregar" {
+        assert.that(paquete.sePuedeEntregar())   //mensajero : jeanGray (por defecto)   
+                                                 //destino : puente de Prooklyn (por defecto)
+        
+        paquete.destino(laMatrix)                //destino : la Matrix
+        assert.that(paquete.sePuedeEntregar()) 
+
+        paquete.mensajero(neo)                   //mensajero : neo (con credito)
+        paquete.destino(puenteDeBrooklyn)        //destino : puente de Prooklyn
+        assert.that(paquete.sePuedeEntregar())   
+        
+        paquete.destino(laMatrix)                //destino : la Matrix
+        assert.that(paquete.sePuedeEntregar())   
+        neo.tieneCredito(false)
+        assert.notThat(paquete.sePuedeEntregar())//caso de neo sin credito
+        
+        paquete.mensajero(saraConnor)            //mensajero : saraConnor (en moto)
+        paquete.destino(laMatrix)                //destino : la Matrix
+        assert.notThat(paquete.sePuedeEntregar())
+        
+        paquete.destino(puenteDeBrooklyn)        //destino : puente de Prooklyn
+        assert.that(paquete.sePuedeEntregar())
+        saraConnor.vehiculo(camion)              //mensajero : saraConnor (en camion sin acoplados)
+        assert.that(paquete.sePuedeEntregar())
+        camion.acoplados(true)                   //mensajero : saraConnor (en camion con acoplados)
+        assert.notThat(paquete.sePuedeEntregar())
+    }
+    
+    test "el pago funciona" {
+        assert.that(paquete.sePuedeEntregar())   //paquete pagado (por defecto)
+        paquete.pagado(false)
+        assert.notThat(paquete.sePuedeEntregar())
+    }
+}
+
+describe "Puente de Brooklyn" {
+    test "las restricciones a los mensajeros funcionan" {
+        assert.that(puenteDeBrooklyn.permitido(jeanGray))
+
+        assert.that(puenteDeBrooklyn.permitido(neo))
+
+        assert.that(puenteDeBrooklyn.permitido(saraConnor))
+
+        saraConnor.vehiculo(camion)
+        camion.acoplados(true)
+        assert.notThat(puenteDeBrooklyn.permitido(saraConnor))
+    }
+}
+
+describe "La Matrix" {
+    test "las restricciones a los mensajeros funcionan" {
+        assert.that(laMatrix.permitido(jeanGray))
+
+        assert.notThat(laMatrix.permitido(saraConnor))
+
+        assert.that(laMatrix.permitido(neo))
+        neo.tieneCredito(false)
+        assert.notThat(laMatrix.permitido(neo))
+    }
+}
+
+describe "casos de prueba" {
+    test "caso Neo a la Matrix con paquete sin pagar" {
+        paquete.mensajero(neo)
+        paquete.pagado(false)
+        paquete.destino(laMatrix)
+        assert.notThat(paquete.sePuedeEntregar())
+    }
+    
+    test "caso Jean a la Matrix con paquete pagado" {
+        paquete.destino(laMatrix)
+        assert.that(paquete.sePuedeEntregar())
+    }
+
+    test "caso Sara al puente de Brooklyn con camion con acoplados" {
+        paquete.mensajero(saraConnor)
+        saraConnor.pesoSara(70)
+        saraConnor.vehiculo(camion)
+        camion.acoplados(true)
+
+        assert.notThat(paquete.sePuedeEntregar())
+    }
+
+    test "caso Sara al puente de Brooklyn con moto" {
+        paquete.mensajero(saraConnor)
+        saraConnor.pesoSara(70)
+
+        assert.that(paquete.sePuedeEntregar())
+    }
+}
